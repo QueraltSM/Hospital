@@ -1,6 +1,9 @@
+import java.util.*;
+
 public class Doctor implements Comparable<Doctor> {
     private int codEmpleado, nHorasExtras, nConsulta;
     private String fechaIngreso, especialidad, nombre;
+    private ArrayList<Paciente> pacientes = new ArrayList<>();
 
     public Doctor(String nombre, int codEmpleado, int nHorasExtras, String fechaIngreso, String especialidad, int nConsulta) {
         this.nombre = nombre;
@@ -11,21 +14,27 @@ public class Doctor implements Comparable<Doctor> {
         this.nConsulta = nConsulta;
     }
 
+    public void setPaciente(Paciente p) {
+        if (!pacientes.contains(p)) pacientes.add(p);
+    }
+
     public String toString(){
         return nombre;
     }
 
+    public int getCod() {
+        return codEmpleado;
+    }
+
+
+    public List<Paciente> getPacientesAtendidos () {
+        return pacientes;
+    }
 
     public String getEspecialidad() {
         return especialidad;
     }
 
-
-    /**
-     * Método compareTo(Doctor d)
-     * Orden en función de especialdiad. En caso de ser la misma, alfabéticamente.
-     *
-     * */
 
     public int compareTo(Doctor d){
         if (d.getEspecialidad().compareTo(getEspecialidad())<0) {
@@ -41,5 +50,13 @@ public class Doctor implements Comparable<Doctor> {
         return 0;
     }
 
+    public boolean equals(Doctor d) {
+        return d.getCod() == getCod();
+    }
+
+
+    public String getNombre() {
+        return nombre;
+    }
 
 }
