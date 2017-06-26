@@ -1,7 +1,8 @@
 public class ConsultaMedica {
     private Doctor d;
     private Paciente p;
-    private String fecha, hora;
+    private String fecha;
+    private String hora;
 
     public ConsultaMedica(Doctor d, Paciente p, String fecha, String hora) {
         this.d = d;
@@ -9,30 +10,30 @@ public class ConsultaMedica {
         this.fecha = fecha;
         this.hora = hora;
         d.setPaciente(p);
+        p.setConsulta(d, fecha, hora);
     }
 
     public String getFecha() {
-        return fecha;
+        return this.fecha;
     }
 
     public String getHora() {
-        return hora;
+        return this.hora;
     }
 
     public boolean equals(ConsultaMedica c) {
-        return c.getDoctor().equals(getDoctor()) && c.getPaciente().equals(getPaciente()) &&
-                c.getFecha().equals(getFecha()) && c.getHora().equals(getHora());
-     }
+        return c.getFecha().equals(this.getFecha()) && c.getHora().equals(this.getHora());
+    }
 
-    public Doctor getDoctor(){
-        return d;
+    public Doctor getDoctor() {
+        return this.d;
     }
 
     public Paciente getPaciente() {
-        return p;
-    }
-    public String toString() {
-        return "Dr " + d.getNombre() + " atenderá al paciente " + p.getNombre();
+        return this.p;
     }
 
+    public String toString() {
+        return "Dr " + this.d.getNombre() + " atenderá al paciente " + this.p.getNombre();
+    }
 }
