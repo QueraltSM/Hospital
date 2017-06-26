@@ -1,9 +1,22 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class Doctor implements Comparable<Doctor> {
-    private int codEmpleado, nHorasExtras, nConsulta;
-    private String fechaIngreso, especialidad, nombre;
-    private ArrayList<Paciente> pacientes = new ArrayList<>();
+    private int codEmpleado;
+    private int nHorasExtras;
+    private int nConsulta;
+    private String fechaIngreso;
+    private String especialidad;
+    private String nombre;
+    private ArrayList<Paciente> pacientes = new ArrayList();
+
+    public Doctor(String nombre, int codEmpleado, String especialidad, int nConsulta) {
+        this.nombre = nombre;
+        this.codEmpleado = codEmpleado;
+        this.especialidad = especialidad;
+        this.nConsulta = nConsulta;
+    }
 
     public Doctor(String nombre, int codEmpleado, int nHorasExtras, String fechaIngreso, String especialidad, int nConsulta) {
         this.nombre = nombre;
@@ -15,48 +28,53 @@ public class Doctor implements Comparable<Doctor> {
     }
 
     public void setPaciente(Paciente p) {
-        if (!pacientes.contains(p)) pacientes.add(p);
+        Iterator var2 = this.pacientes.iterator();
+
+        Paciente i;
+        do {
+            if(!var2.hasNext()) {
+                this.pacientes.add(p);
+                return;
+            }
+
+            i = (Paciente)var2.next();
+        } while(!i.equals(p));
+
     }
 
-    public String toString(){
-        return nombre;
+    public String toString() {
+        return this.nombre;
     }
 
     public int getCod() {
-        return codEmpleado;
+        return this.codEmpleado;
     }
 
-
-    public List<Paciente> getPacientesAtendidos () {
-        return pacientes;
+    public List<Paciente> getPacientesAtendidos() {
+        return this.pacientes;
     }
 
     public String getEspecialidad() {
-        return especialidad;
+        return this.especialidad;
     }
 
-
-    public int compareTo(Doctor d){
-        if (d.getEspecialidad().compareTo(getEspecialidad())<0) {
-            return 1;
-        } else if (d.getEspecialidad().compareTo(getEspecialidad())>0) {
-            return -1;
-        }
-        if (d.toString().compareTo(toString()) < 0) {
-            return 1;
-        } else if (d.toString().compareTo(toString()) > 0) {
-            return -1;
-        }
-        return 0;
+    public int compareTo(Doctor d) {
+        return Administracion.getOrden() == 0?
+            (d.getEspecialidad().compareTo(this.getEspecialidad()) < 0?
+             1:(d.getEspecialidad().compareTo(this.getEspecialidad()) > 0?-1:
+                (d.toString().compareTo(this.toString()) < 0?1:(d.toString().compareTo(this.toString())
+                     > 0?-1:0)))):(Administracion.getOrden() == 1?(d.getCod() < 
+                          this.getCod()?1:(d.getCod() == this.getCod()?0:-1)):(Administracion.getOrden() == 
+                                2?(d.toString().compareTo(this.toString()) < 0?1:
+                                   (d.toString().compareTo(this.toString()) > 0?-1:0)):-2));
     }
 
     public boolean equals(Doctor d) {
-        return d.getCod() == getCod();
+        return d.getCod() == this.getCod();
     }
-
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
-
 }
+
